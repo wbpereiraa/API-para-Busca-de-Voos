@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,10 +53,20 @@ public class Flights99PlanesController {
 	public ResponseEntity<Object> updateFlight(@PathVariable(value="id") UUID id, @RequestBody @Valid Flights99PlanesRecordDto flights99PlanesRecordDto){
 		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(id);
 		if(flight.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Airport not found.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
 		}
 		var Flights99Planes = flight.get();
 		BeanUtils.copyProperties(flights99PlanesRecordDto, Flights99Planes);
 		return ResponseEntity.status(HttpStatus.OK).body(flights99PlanesRepository.save(Flights99Planes));
+	}
+	
+	@DeleteMapping("/99planes/flights/{id}")
+	public ResponseEntity<Object> deleteFlight(@PathVariable(value="id") UUID id){
+		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(id);
+		if(flight.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
+		}
+		flights99PlanesRepository.delete(flight.get());
+		return ResponseEntity.status(HttpStatus.OK).body("Flight deleted sucessfuly.");
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,10 +53,20 @@ public class FlightsUberAirController {
 	public ResponseEntity<Object> updateFlight(@PathVariable(value="id") UUID id, @RequestBody @Valid FlightsUberAirRecordDto flightsUberAirRecordDto){
 		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(id);
 		if(flight.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Airport not found.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
 		}
 		var FlightsUberAir = flight.get();
 		BeanUtils.copyProperties(flightsUberAirRecordDto, FlightsUberAir);
 		return ResponseEntity.status(HttpStatus.OK).body(flightsUberAirRepository.save(FlightsUberAir));
+	}
+	
+	@DeleteMapping("/flightsuberair/flights/{id}")
+	public ResponseEntity<Object> deleteFlight(@PathVariable(value="id") UUID id){
+		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(id);
+		if(flight.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
+		}
+		flightsUberAirRepository.delete(flight.get());
+		return ResponseEntity.status(HttpStatus.OK).body("Flight deleted sucessfuly.");
 	}
 }
