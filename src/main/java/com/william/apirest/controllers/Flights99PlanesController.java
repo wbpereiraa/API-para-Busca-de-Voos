@@ -2,7 +2,6 @@ package com.william.apirest.controllers;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +40,8 @@ public class Flights99PlanesController {
 	}
 	
 	@GetMapping("/99planes/flights/{id}")
-	public ResponseEntity<Object> getOneFlight(@PathVariable(value="id") UUID id){
-		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(id);
+	public ResponseEntity<Object> getOneFlight(@PathVariable(value="id") String idFlightsNumber){
+		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(idFlightsNumber);
 		if(flight.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
 		}
@@ -50,8 +49,8 @@ public class Flights99PlanesController {
 	}
 	
 	@PutMapping("/99planes/flights/{id}")
-	public ResponseEntity<Object> updateFlight(@PathVariable(value="id") UUID id, @RequestBody @Valid Flights99PlanesRecordDto flights99PlanesRecordDto){
-		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(id);
+	public ResponseEntity<Object> updateFlight(@PathVariable(value="id") String idFlightsNumber, @RequestBody @Valid Flights99PlanesRecordDto flights99PlanesRecordDto){
+		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(idFlightsNumber);
 		if(flight.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
 		}
@@ -61,8 +60,8 @@ public class Flights99PlanesController {
 	}
 	
 	@DeleteMapping("/99planes/flights/{id}")
-	public ResponseEntity<Object> deleteFlight(@PathVariable(value="id") UUID id){
-		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(id);
+	public ResponseEntity<Object> deleteFlight(@PathVariable(value="id") String idFlightsNumber){
+		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(idFlightsNumber);
 		if(flight.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
 		}

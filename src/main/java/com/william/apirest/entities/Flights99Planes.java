@@ -1,66 +1,56 @@
 package com.william.apirest.entities;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
-import java.util.UUID;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "flights99planes")
-public class Flights99Planes implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+@Table(name = "flights_99_planes")
+public class Flights99Planes{
 	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private UUID id;
+	@Column(name = "voo")
 	private String idFlightsNumber;
+	@Column(name = "origem")
 	private String airportOrigin;
+	@Column(name = "destino")
 	private String airportDestiny;
-	private LocalDate data;
-	private LocalDateTime departureTime;
-	private LocalDateTime arrivalTime;
+	@Column(name = "data_saida")
+	private LocalDate dataFlights;
+	@Column(name = "saida")
+	private LocalTime departureTime;
+	@Column(name = "chegada")
+	private LocalTime arrivalTime;
+	@Column(name = "valor")
 	private BigDecimal price;
+	
+	
 	
 	public Flights99Planes() {
 		
 	}
 
-	public Flights99Planes(UUID id, String idFlightsNumber, String airportOrigin, String airportDestiny, LocalDate data,
-			LocalDateTime departureTime, LocalDateTime arrivalTime, BigDecimal price) {
+	public Flights99Planes(String idFlightsNumber, String airportOrigin, String airportDestiny, LocalDate dataFlights,
+			LocalTime departureTime, LocalTime arrivalTime, BigDecimal price) {
 		super();
-		this.id = id;
 		this.idFlightsNumber = idFlightsNumber;
 		this.airportOrigin = airportOrigin;
 		this.airportDestiny = airportDestiny;
-		this.data = data;
+		this.dataFlights = dataFlights;
 		this.departureTime = departureTime;
 		this.arrivalTime = arrivalTime;
 		this.price = price;
 	}
 
-	public UUID getId() {
-		return id;
-	}
-	
-	public void setId(UUID id) {
-		this.id = id;
-	}
-
 	public String getIdFlightsNumber() {
 		return idFlightsNumber;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	public void setIdFlightsNumber(String idFlightsNumber) {
@@ -83,27 +73,27 @@ public class Flights99Planes implements Serializable{
 		this.airportDestiny = airportDestiny;
 	}
 
-	public LocalDate getData() {
-		return data;
+	public LocalDate getDataFlights() {
+		return dataFlights;
 	}
 
-	public void setData(LocalDate data) {
-		this.data = data;
+	public void setDataFlights(LocalDate dataFlights) {
+		this.dataFlights = dataFlights;
 	}
 
-	public LocalDateTime getDepartureTime() {
+	public LocalTime getDepartureTime() {
 		return departureTime;
 	}
 
-	public void setDepartureTime(LocalDateTime departureTime) {
+	public void setDepartureTime(LocalTime departureTime) {
 		this.departureTime = departureTime;
 	}
 
-	public LocalDateTime getArrivalTime() {
+	public LocalTime getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(LocalDateTime arrivalTime) {
+	public void setArrivalTime(LocalTime arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 
@@ -117,7 +107,7 @@ public class Flights99Planes implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(idFlightsNumber);
 	}
 
 	@Override
@@ -129,6 +119,6 @@ public class Flights99Planes implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Flights99Planes other = (Flights99Planes) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(idFlightsNumber, other.idFlightsNumber);
 	}
 }

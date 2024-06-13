@@ -2,7 +2,6 @@ package com.william.apirest.controllers;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +40,8 @@ public class AirportAvailableController {
 	}
 	
 	@GetMapping("/airportavailable/{id}")
-	public ResponseEntity<Object> getOneAirport(@PathVariable(value="id") UUID id){
-		Optional<AirportAvailable> airport = airportAvailableRepository.findById(id);
+	public ResponseEntity<Object> getOneAirport(@PathVariable(value="id") String airportName){
+		Optional<AirportAvailable> airport = airportAvailableRepository.findById(airportName);
 		if(airport.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Airport not found.");
 		}
@@ -50,8 +49,8 @@ public class AirportAvailableController {
 	}
 	
 	@PutMapping("/airportavailable/{id}")
-	public ResponseEntity<Object> updateAirport(@PathVariable(value="id") UUID id, @RequestBody @Valid AirportAvailableRecordDto airportAvailableRecordDto){
-		Optional<AirportAvailable> airport = airportAvailableRepository.findById(id);
+	public ResponseEntity<Object> updateAirport(@PathVariable(value="id") String airportName, @RequestBody @Valid AirportAvailableRecordDto airportAvailableRecordDto){
+		Optional<AirportAvailable> airport = airportAvailableRepository.findById(airportName);
 		if(airport.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Airport not found.");
 		}
@@ -61,8 +60,8 @@ public class AirportAvailableController {
 	}
 	
 	@DeleteMapping("/airportavailable/{id}")
-	public ResponseEntity<Object> deleteAirport(@PathVariable(value="id") UUID id){
-		Optional<AirportAvailable> airport = airportAvailableRepository.findById(id);
+	public ResponseEntity<Object> deleteAirport(@PathVariable(value="id") String airportName){
+		Optional<AirportAvailable> airport = airportAvailableRepository.findById(airportName);
 		if(airport.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Airport not found.");
 		}
