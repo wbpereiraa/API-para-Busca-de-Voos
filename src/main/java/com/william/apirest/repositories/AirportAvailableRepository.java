@@ -9,5 +9,7 @@ import com.william.apirest.entities.AirportAvailable;
 
 public interface AirportAvailableRepository extends JpaRepository <AirportAvailable, String>{
 
-	List<AirportAvailable> findByairportNameContaining(String airportName);
+	List<AirportAvailable> findByairportNameContainingIgnoreCase(String airportName);
+	
+	
 }

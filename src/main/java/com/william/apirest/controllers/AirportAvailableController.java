@@ -30,22 +30,22 @@ public class AirportAvailableController {
 	@Autowired
 	AirportAvailableRepository airportAvailableRepository;
 	
-	@PostMapping(value = "/airportavailable")
+	@PostMapping(value = "/newairportavailable")
 	public ResponseEntity<AirportAvailable> saveAirport(@RequestBody @Valid AirportAvailableRecordDto airportAvailableRecordDto){
 		var airportAvailable = new AirportAvailable();
 		BeanUtils.copyProperties(airportAvailableRecordDto, airportAvailable);
 		return ResponseEntity.status(HttpStatus.CREATED).body(airportAvailableRepository.save(airportAvailable));
 	}
 	
-	@GetMapping(value = "/airportavailable")
+	@GetMapping(value = "/allairportavailable")
 	public ResponseEntity<List<AirportAvailable>> getAllAirports(){
 		return ResponseEntity.status(HttpStatus.OK).body(airportAvailableRepository.findAll());
 	}
 	
 	
-	@GetMapping(value = "/filter")
+	@GetMapping(value = "/filter/airportname")
 	public ResponseEntity<List<AirportAvailable>> findByAirport(@RequestParam("airportName")String airportName){
-		 return ResponseEntity.status(HttpStatus.OK).body(airportAvailableRepository.findByairportNameContaining(airportName));
+		 return ResponseEntity.status(HttpStatus.OK).body(airportAvailableRepository.findByairportNameContainingIgnoreCase(airportName));
 	}
 	
 	@PutMapping(value = "/airportavailable/{id}")

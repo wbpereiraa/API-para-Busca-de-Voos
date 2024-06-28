@@ -27,19 +27,19 @@ public class Flights99PlanesController {
 	@Autowired
 	Flights99PlanesRepository flights99PlanesRepository;
 	
-	@PostMapping("/99planes/flights")
+	@PostMapping("/99planes/newflight")
 	public ResponseEntity<Flights99Planes> saveFlights(@RequestBody @Valid Flights99PlanesRecordDto flights99PlanesRecordDto){
 		var flights99Planes = new Flights99Planes();
 		BeanUtils.copyProperties(flights99PlanesRecordDto, flights99Planes);
 		return ResponseEntity.status(HttpStatus.CREATED).body(flights99PlanesRepository.save(flights99Planes));
 	}
 	
-	@GetMapping("/99planes/flights")
+	@GetMapping("/99planes/allflights")
 	public ResponseEntity<List<Flights99Planes>> getAllFlights(){
 		return ResponseEntity.status(HttpStatus.OK).body(flights99PlanesRepository.findAll());
 	}
 	
-	@GetMapping("/99planes/flights/{id}")
+	@GetMapping("/99planes/oneflight/{id}")
 	public ResponseEntity<Object> getOneFlight(@PathVariable(value="id") String idFlightsNumber){
 		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(idFlightsNumber);
 		if(flight.isEmpty()) {
@@ -48,7 +48,7 @@ public class Flights99PlanesController {
 		return ResponseEntity.status(HttpStatus.OK).body(flight.get());
 	}
 	
-	@PutMapping("/99planes/flights/{id}")
+	@PutMapping("/99planes/flight/{id}")
 	public ResponseEntity<Object> updateFlight(@PathVariable(value="id") String idFlightsNumber, @RequestBody @Valid Flights99PlanesRecordDto flights99PlanesRecordDto){
 		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(idFlightsNumber);
 		if(flight.isEmpty()) {
@@ -59,13 +59,13 @@ public class Flights99PlanesController {
 		return ResponseEntity.status(HttpStatus.OK).body(flights99PlanesRepository.save(Flights99Planes));
 	}
 	
-	@DeleteMapping("/99planes/flights/{id}")
+	@DeleteMapping("/99planes/flight/{id}")
 	public ResponseEntity<Object> deleteFlight(@PathVariable(value="id") String idFlightsNumber){
 		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(idFlightsNumber);
 		if(flight.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
 		}
 		flights99PlanesRepository.delete(flight.get());
-		return ResponseEntity.status(HttpStatus.OK).body("Flight deleted sucessfuly.");
+		return ResponseEntity.status(HttpStatus.OK).body("Flight Successfully Deleted.");
 	}
 }
