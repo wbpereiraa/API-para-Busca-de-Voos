@@ -3,6 +3,7 @@ package com.william.apirest.controllers;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.william.apirest.dtos.FlightsUberAirRecordDto;
 import com.william.apirest.entities.FlightsUberAir;
 import com.william.apirest.repositories.AirportAvailableRepository;
+import com.william.apirest.repositories.Flights99PlanesRepository;
 import com.william.apirest.repositories.FlightsUberAirRepository;
 
 import jakarta.validation.Valid;
@@ -31,6 +33,8 @@ public class FlightsUberAirController {
 	FlightsUberAirRepository flightsUberAirRepository;
 	@Autowired
 	AirportAvailableRepository airportAvailableRepository;
+	@Autowired
+	Flights99PlanesRepository flights99PlanesRepository;
 	
 	
 	@PostMapping("/flightsuberair/newflight")
@@ -46,8 +50,8 @@ public class FlightsUberAirController {
 	}
 	
 	@GetMapping("/flightsuberair/oneflight/{id}")
-	public ResponseEntity<Object> getOneFlight(@PathVariable(value="id") String idFlightsNumber){
-		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(idFlightsNumber);
+	public ResponseEntity<Object> getOneFlight(@PathVariable(value="id") UUID id){
+		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(id);
 		if(flight.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
 		}
@@ -56,17 +60,16 @@ public class FlightsUberAirController {
 	
 	@GetMapping(value = "/flightsuberair/airportOrigin/airportDestiny/dataFlights")
 	public ResponseEntity<List<FlightsUberAir>> findByFlightsForFilters( 
-			@RequestParam String airportOrigin, 
-			@RequestParam String airportDestiny,
-			@RequestParam String dataFlights){
+			@RequestParam ("airportorigin") String airportOrigin, 
+			@RequestParam ("airportdestiny")String airportDestiny,
+			@RequestParam ("dataflights")String dataFlights){
 		LocalDate date = LocalDate.parse(dataFlights);
-		List<FlightsUberAir> filteredFlights = flightsUberAirRepository.findByDataFlightsAndAirportOriginAndAirportDestiny(date, airportOrigin, airportDestiny);
-		 return ResponseEntity.status(HttpStatus.OK).body(filteredFlights);
+		 return ResponseEntity.status(HttpStatus.OK).body(flightsUberAirRepository.findByDataFlightsAndAirportOriginAndAirportDestiny(date, airportOrigin, airportDestiny));
 	}
 	
 	@PutMapping("/flightsuberair/flight/{id}")
-	public ResponseEntity<Object> updateFlight(@PathVariable(value="id") String idFlightsNumber, @RequestBody @Valid FlightsUberAirRecordDto flightsUberAirRecordDto){
-		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(idFlightsNumber);
+	public ResponseEntity<Object> updateFlight(@PathVariable(value="id") UUID id, @RequestBody @Valid FlightsUberAirRecordDto flightsUberAirRecordDto){
+		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(id);
 		if(flight.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
 		}
@@ -76,8 +79,8 @@ public class FlightsUberAirController {
 	}
 	
 	@DeleteMapping("/flightsuberair/flight/{id}")
-	public ResponseEntity<Object> deleteFlight(@PathVariable(value="id") String idFlightsNumber){
-		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(idFlightsNumber);
+	public ResponseEntity<Object> deleteFlight(@PathVariable(value="id") UUID id){
+		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(id);
 		if(flight.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
 		}

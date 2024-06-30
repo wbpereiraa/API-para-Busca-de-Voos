@@ -1,16 +1,24 @@
 package com.william.apirest.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "airportAvailable")
-public class AirportAvailable {
+public class AirportAvailable implements Serializable {
 
+
+	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID id;
 	private String airportName;
 	private String airportAbbreviation;
 	private String airportCity;
@@ -19,12 +27,17 @@ public class AirportAvailable {
 		
 	}
 	
-	public AirportAvailable(String airportName, String airportAbbreviation, String airportCity) {
+	public AirportAvailable(UUID id, String airportName, String airportAbbreviation, String airportCity) {
 		super();
 		this.airportName = airportName;
 		this.airportAbbreviation = airportAbbreviation;
 		this.airportCity = airportCity;
+		this.id = id;
 	}
+	
+	public UUID getId() {
+        return id;
+    }
 	
 	public String getAirportName() {
 		return airportName;
