@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.william.apirest.dtos.FlightsUberAirPatchRecordDto;
 import com.william.apirest.dtos.FlightsUberAirRecordDto;
 import com.william.apirest.entities.FlightsUberAir;
 import com.william.apirest.repositories.AirportAvailableRepository;
@@ -75,6 +77,17 @@ public class FlightsUberAirController {
 		}
 		var FlightsUberAir = flight.get();
 		BeanUtils.copyProperties(flightsUberAirRecordDto, FlightsUberAir);
+		return ResponseEntity.status(HttpStatus.OK).body(flightsUberAirRepository.save(FlightsUberAir));
+	}
+	
+	@PatchMapping("/flightsuberair/flight/{id}")
+	public ResponseEntity<Object> updateFlightPach(@PathVariable(value="id") UUID id, @RequestBody @Valid FlightsUberAirPatchRecordDto flightsUberAirPatchRecordDto ){
+		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(id);
+		if(flight.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
+		}
+		var FlightsUberAir = flight.get();
+		BeanUtils.copyProperties(flightsUberAirPatchRecordDto, FlightsUberAir);
 		return ResponseEntity.status(HttpStatus.OK).body(flightsUberAirRepository.save(FlightsUberAir));
 	}
 	
