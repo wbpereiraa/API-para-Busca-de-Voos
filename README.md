@@ -1,6 +1,7 @@
 # Flight Reservation API
 
 Este projeto é uma API de reserva de voos construída usando Spring Boot e PostgreSQL. A API permite gerenciar voos (listar, criar, atualizar, deletar).
+O conceito de Testes Unitários também foi implementado aqui neste projeto.
 
 ## Funcionalidades
 
