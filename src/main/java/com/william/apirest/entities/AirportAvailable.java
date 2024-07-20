@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+
 @Entity
 @Table(name = "airportAvailable")
 public class AirportAvailable implements Serializable {
@@ -23,10 +24,6 @@ public class AirportAvailable implements Serializable {
 	private String airportAbbreviation;
 	private String airportCity;
 	
-	public AirportAvailable() {
-		
-	}
-	
 	public AirportAvailable(UUID id, String airportName, String airportAbbreviation, String airportCity) {
 		super();
 		this.airportName = airportName;
@@ -35,6 +32,9 @@ public class AirportAvailable implements Serializable {
 		this.id = id;
 	}
 	
+	public AirportAvailable() {
+		
+	}
 	public UUID getId() {
         return id;
     }
