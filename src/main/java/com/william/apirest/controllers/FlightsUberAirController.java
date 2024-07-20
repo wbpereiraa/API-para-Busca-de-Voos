@@ -1,11 +1,8 @@
 package com.william.apirest.controllers;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.william.apirest.dtos.FlightsUberAirPatchRecordDto;
 import com.william.apirest.dtos.FlightsUberAirRecordDto;
 import com.william.apirest.entities.FlightsUberAir;
-import com.william.apirest.repositories.AirportAvailableRepository;
-import com.william.apirest.repositories.Flights99PlanesRepository;
 import com.william.apirest.repositories.FlightsUberAirRepository;
+import com.william.apirest.service.ServiceFlightsUberAir;
 
 import jakarta.validation.Valid;
 
@@ -33,71 +29,44 @@ public class FlightsUberAirController {
 
 	@Autowired
 	FlightsUberAirRepository flightsUberAirRepository;
+	
 	@Autowired
-	AirportAvailableRepository airportAvailableRepository;
-	@Autowired
-	Flights99PlanesRepository flights99PlanesRepository;
+	ServiceFlightsUberAir service;
 	
 	
 	@PostMapping("/flightsuberair/newflight")
 	public ResponseEntity<FlightsUberAir> saveFlights(@RequestBody @Valid FlightsUberAirRecordDto flightsUberAirRecordDto){
-		var flightsUberAir = new FlightsUberAir();
-		BeanUtils.copyProperties(flightsUberAirRecordDto, flightsUberAir);
-		return ResponseEntity.status(HttpStatus.CREATED).body(flightsUberAirRepository.save(flightsUberAir));
+		FlightsUberAir flightsUberAir = service.saveFlights(flightsUberAirRecordDto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(flightsUberAir);
 	}
 	
 	@GetMapping("/flightsuberair/allflights")
 	public ResponseEntity<List<FlightsUberAir>> getAllFlights(){
-		return ResponseEntity.status(HttpStatus.OK).body(flightsUberAirRepository.findAll());
+		return ResponseEntity.status(HttpStatus.OK).body(service.getAllFlights());
 	}
 	
 	@GetMapping("/flightsuberair/oneflight/{id}")
 	public ResponseEntity<Object> getOneFlight(@PathVariable(value="id") UUID id){
-		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(id);
-		if(flight.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
-		}
-		return ResponseEntity.status(HttpStatus.OK).body(flight.get());
+		return ResponseEntity.status(HttpStatus.OK).body(service.getOneFlight(id));
 	}
 	
-	@GetMapping(value = "/flightsuberair/airportOrigin/airportDestiny/dataFlights")
-	public ResponseEntity<List<FlightsUberAir>> findByFlightsForFilters( 
-			@RequestParam ("airportorigin") String airportOrigin, 
-			@RequestParam ("airportdestiny")String airportDestiny,
-			@RequestParam ("dataflights")String dataFlights){
-		LocalDate date = LocalDate.parse(dataFlights);
-		 return ResponseEntity.status(HttpStatus.OK).body(flightsUberAirRepository.findByDataFlightsAndAirportOriginAndAirportDestiny(date, airportOrigin, airportDestiny));
+	@GetMapping("/flightsuberair/airportOrigin/airportDestiny/dataFlights")
+	public ResponseEntity<List<FlightsUberAir>> findByFlightsForFilters(@RequestParam String airportOrigin, @RequestParam String airportDestiny, @RequestParam String dataFlights){
+		 return ResponseEntity.status(HttpStatus.OK).body(service.findByFlightsForFilters(airportOrigin, airportDestiny, dataFlights));
 	}
 	
 	@PutMapping("/flightsuberair/flight/{id}")
 	public ResponseEntity<Object> updateFlight(@PathVariable(value="id") UUID id, @RequestBody @Valid FlightsUberAirRecordDto flightsUberAirRecordDto){
-		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(id);
-		if(flight.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
-		}
-		var FlightsUberAir = flight.get();
-		BeanUtils.copyProperties(flightsUberAirRecordDto, FlightsUberAir);
-		return ResponseEntity.status(HttpStatus.OK).body(flightsUberAirRepository.save(FlightsUberAir));
+		return ResponseEntity.status(HttpStatus.OK).body(service.updateFlight(id, flightsUberAirRecordDto));
 	}
 	
 	@PatchMapping("/flightsuberair/flight/{id}")
 	public ResponseEntity<Object> updateFlightPach(@PathVariable(value="id") UUID id, @RequestBody @Valid FlightsUberAirPatchRecordDto flightsUberAirPatchRecordDto ){
-		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(id);
-		if(flight.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
-		}
-		var FlightsUberAir = flight.get();
-		BeanUtils.copyProperties(flightsUberAirPatchRecordDto, FlightsUberAir);
-		return ResponseEntity.status(HttpStatus.OK).body(flightsUberAirRepository.save(FlightsUberAir));
+		return ResponseEntity.status(HttpStatus.OK).body(service.updateFlightPatch(id, flightsUberAirPatchRecordDto));
 	}
 	
 	@DeleteMapping("/flightsuberair/flight/{id}")
 	public ResponseEntity<Object> deleteFlight(@PathVariable(value="id") UUID id){
-		Optional<FlightsUberAir> flight = flightsUberAirRepository.findById(id);
-		if(flight.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
-		}
-		flightsUberAirRepository.delete(flight.get());
-		return ResponseEntity.status(HttpStatus.OK).body("Flight deleted sucessfuly.");
+		return ResponseEntity.status(HttpStatus.OK).body(service.deleteFlight(id));
 	}
 }

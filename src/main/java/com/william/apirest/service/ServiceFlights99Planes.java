@@ -32,7 +32,11 @@ public class ServiceFlights99Planes {
 		return flights99PlanesRepository.findAll();
 	}
 	
-	public Optional<Flights99Planes> getOneFlight(@PathVariable(value="id") UUID id){
+	public Object getOneFlight(@PathVariable(value="id") UUID id){
+		Optional<Flights99Planes> flight = flights99PlanesRepository.findById(id);
+		if(flight.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Flight not found.");
+		}
 		return flights99PlanesRepository.findById(id);
 	}
 	
