@@ -19,7 +19,7 @@ import com.william.apirest.entities.FlightsUberAir;
 import com.william.apirest.repositories.FlightsUberAirRepository;
 
 @Service
-public class ServiceFlightsUberAir {
+public class FlightsUberAirService {
 	
 	@Autowired
 	private FlightsUberAirRepository flightsUberAirRepository;

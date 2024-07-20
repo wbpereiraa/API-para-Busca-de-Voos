@@ -19,7 +19,7 @@ import com.william.apirest.dtos.Flights99PlanesPatchRecordDto;
 import com.william.apirest.dtos.Flights99PlanesRecordDto;
 import com.william.apirest.entities.Flights99Planes;
 import com.william.apirest.repositories.Flights99PlanesRepository;
-import com.william.apirest.service.ServiceFlights99Planes;
+import com.william.apirest.service.Flights99PlanesService;
 
 import jakarta.validation.Valid;
 
@@ -30,7 +30,7 @@ public class Flights99PlanesController {
 	Flights99PlanesRepository flights99PlanesRepository;
 	
 	@Autowired
-	ServiceFlights99Planes service;
+	Flights99PlanesService service;
 	
 	@PostMapping("/99planes/newflight")
 	public ResponseEntity<Flights99Planes> saveFlights(@RequestBody @Valid Flights99PlanesRecordDto flights99PlanesRecordDto){

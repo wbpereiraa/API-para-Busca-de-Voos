@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.william.apirest.dtos.AirportAvailableRecordDto;
 import com.william.apirest.entities.AirportAvailable;
 import com.william.apirest.repositories.AirportAvailableRepository;
-import com.william.apirest.service.ServiceAirportAvailable;
+import com.william.apirest.service.AirportAvailableService;
 
 import jakarta.validation.Valid;
 
@@ -31,7 +31,7 @@ public class AirportAvailableController {
 	AirportAvailableRepository airportAvailableRepository;
 	
 	@Autowired
-	ServiceAirportAvailable service;
+	AirportAvailableService service;
 	
 	@PostMapping(value = "/newairportavailable")
 	public ResponseEntity<AirportAvailable> saveAirport(@RequestBody @Valid AirportAvailableRecordDto airportAvailableRecordDto){

@@ -20,7 +20,7 @@ import com.william.apirest.dtos.FlightsUberAirPatchRecordDto;
 import com.william.apirest.dtos.FlightsUberAirRecordDto;
 import com.william.apirest.entities.FlightsUberAir;
 import com.william.apirest.repositories.FlightsUberAirRepository;
-import com.william.apirest.service.ServiceFlightsUberAir;
+import com.william.apirest.service.FlightsUberAirService;
 
 import jakarta.validation.Valid;
 
@@ -31,7 +31,7 @@ public class FlightsUberAirController {
 	FlightsUberAirRepository flightsUberAirRepository;
 	
 	@Autowired
-	ServiceFlightsUberAir service;
+	FlightsUberAirService service;
 	
 	
 	@PostMapping("/flightsuberair/newflight")

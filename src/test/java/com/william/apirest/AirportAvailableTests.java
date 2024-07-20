@@ -20,7 +20,7 @@ import com.william.apirest.controllers.AirportAvailableController;
 import com.william.apirest.dtos.AirportAvailableRecordDto;
 import com.william.apirest.entities.AirportAvailable;
 import com.william.apirest.repositories.AirportAvailableRepository;
-import com.william.apirest.service.ServiceAirportAvailable;
+import com.william.apirest.service.AirportAvailableService;
 
 
 
@@ -35,7 +35,7 @@ public class AirportAvailableTests {
 	private static final String airportCity = "Guarulhos SP";
 	
     @InjectMocks
-    private ServiceAirportAvailable service;
+    private AirportAvailableService service;
     
 	@Mock
 	private AirportAvailableRepository airportAvailableRepository;

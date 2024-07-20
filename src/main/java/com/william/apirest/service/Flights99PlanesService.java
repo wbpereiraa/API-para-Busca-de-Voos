@@ -17,7 +17,7 @@ import com.william.apirest.entities.Flights99Planes;
 import com.william.apirest.repositories.Flights99PlanesRepository;
 
 @Service
-public class ServiceFlights99Planes {
+public class Flights99PlanesService {
 	
 	@Autowired
 	private Flights99PlanesRepository flights99PlanesRepository;

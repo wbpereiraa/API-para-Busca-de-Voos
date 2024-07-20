@@ -16,7 +16,7 @@ import com.william.apirest.entities.AirportAvailable;
 import com.william.apirest.repositories.AirportAvailableRepository;
 
 @Service
-public class ServiceAirportAvailable {
+public class AirportAvailableService {
 	
 	@Autowired
 	private AirportAvailableRepository airportAvailableRepository;
