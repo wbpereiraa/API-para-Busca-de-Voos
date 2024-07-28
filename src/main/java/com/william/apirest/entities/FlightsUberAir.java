@@ -1,5 +1,6 @@
 package com.william.apirest.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,12 +14,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "flightsUberAir")
 public class FlightsUberAir implements Serializable{
 	
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,83 +50,6 @@ public class FlightsUberAir implements Serializable{
 	
 	public FlightsUberAir() {
 		
-	}
-
-	public FlightsUberAir(UUID id, String idFlightsNumber, String airportOrigin, String airportDestiny, LocalDate dataFlights,
-			LocalTime departureTime, LocalTime arrivalTime, BigDecimal price) {
-		super();
-		this.idFlightsNumber = idFlightsNumber;
-		this.airportOrigin = airportOrigin;
-		this.airportDestiny = airportDestiny;
-		this.dataFlights = dataFlights;
-		this.departureTime = departureTime;
-		this.arrivalTime = arrivalTime;
-		this.price = price;
-		this.id = id;
-	}
-	
-	public UUID getId() {
-        return id;
-    }
-
-	public String setIdFlightsNumber() {
-		return idFlightsNumber;
-	}
-
-	public String getIdFlightsNumber() {
-		return idFlightsNumber;
-	}
-
-	public void setIdFlightsNumber(String idFlightsNumber) {
-		this.idFlightsNumber = idFlightsNumber;
-	}
-
-	public String getAirportOrigin() {
-		return airportOrigin;
-	}
-
-	public void setAirportOrigin(String airportOrigin) {
-		this.airportOrigin = airportOrigin;
-	}
-
-	public String getAirportDestiny() {
-		return airportDestiny;
-	}
-
-	public void setAirportDestiny(String airportDestiny) {
-		this.airportDestiny = airportDestiny;
-	}
-
-	public LocalDate getDataFlights() {
-		return dataFlights;
-	}
-
-	public void setDataFlights(LocalDate dataFlights) {
-		this.dataFlights = dataFlights;
-	}
-
-	public LocalTime getDepartureTime() {
-		return departureTime;
-	}
-
-	public void setDepartureTime(LocalTime departureTime) {
-		this.departureTime = departureTime;
-	}
-
-	public LocalTime getArrivalTime() {
-		return arrivalTime;
-	}
-
-	public void setArrivalTime(LocalTime arrivalTime) {
-		this.arrivalTime = arrivalTime;
-	}
-
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
 	}
 
 	@Override

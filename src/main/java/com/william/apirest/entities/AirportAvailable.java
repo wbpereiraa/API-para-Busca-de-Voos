@@ -1,5 +1,6 @@
 package com.william.apirest.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
@@ -9,12 +10,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "airportAvailable")
 public class AirportAvailable implements Serializable {
 
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,33 +41,6 @@ public class AirportAvailable implements Serializable {
 	
 	public AirportAvailable() {
 		
-	}
-	public UUID getId() {
-        return id;
-    }
-	
-	public String getAirportName() {
-		return airportName;
-	}
-
-	public void setAirportName(String airportName) {
-		this.airportName = airportName;
-	}
-
-	public String getAirportAbbreviation() {
-		return airportAbbreviation;
-	}
-
-	public void setAirportAbbreviation(String airportAbbreviation) {
-		this.airportAbbreviation = airportAbbreviation;
-	}
-
-	public String getAirportCity() {
-		return airportCity;
-	}
-
-	public void setAirportCity(String airportCity) {
-		this.airportCity = airportCity;
 	}
 
 	@Override

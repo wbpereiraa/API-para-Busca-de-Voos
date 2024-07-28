@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.william.apirest.controllers.AirportAvailableController;
 import com.william.apirest.dtos.AirportAvailableRecordDto;
 import com.william.apirest.entities.AirportAvailable;
 import com.william.apirest.repositories.AirportAvailableRepository;
